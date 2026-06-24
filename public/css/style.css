@@ -1,0 +1,222 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* header */
+header {
+  background-color: #0062e6;
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+nav {
+  text-align: center;
+  margin-top: 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: rgb(237, 177, 45);
+}
+
+/* footer */
+footer {
+  background-color: #343a40;
+  color: #ccc;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 60px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  margin: 0;
+}
+
+/* flash messages */
+.flash {
+  padding: 10px 16px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.flash.success { background: #d4edda; color: #155724; }
+.flash.danger  { background: #f8d7da; color: #721c24; }
+.flash.info    { background: #d1ecf1; color: #0c5460; }
+
+/* login/register box */
+.login-box,
+.register-box {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2,
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid rgb(46, 43, 43);
+  box-sizing: border-box;
+}
+
+.btn {
+  background-color: rgb(96, 152, 202);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: rgb(137, 84, 84);
+}
+
+/* task box */
+.task-box {
+  max-width: 700px;
+  margin: 40px auto;
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.task-form input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.task-table th,
+.task-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.task-table th {
+  background-color: rgb(234, 211, 211);
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
+}
+
+.badge.pending { background-color: #ffc107; color: #212529; }
+.badge.working { background-color: #17a2b8; }
+.badge.done    { background-color: #28a745; }
+
+.btn-small {
+  font-size: 12px;
+  padding: 6px 12px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-small:hover {
+  background-color: gray;
+}
+
+.btn-clear {
+  background-color: rgb(233, 54, 54);
+  color: white;
+  margin-bottom: 10px;
+}
+
+.btn-clear:hover {
+  background-color: #c82333;
+}
+
+.home-box {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.home-box h2 {
+  margin-bottom: 12px;
+}
+
+.home-box p {
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.home-box .btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register – To-Do App</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>To-Do App</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login.html">Login</a>
+      <a href="/register.html">Register</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div id="flash-container"></div>
+
+  <div class="register-box">
+    <h2>Register</h2>
+    <form id="register-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter your username" required minlength="3" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required minlength="6">
+      </div>
+      <button type="submit" class="btn">Register</button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 My To-Do App</p>
+  </div>
+</footer>
+
+<script>
+  if (localStorage.getItem('token')) {
+    window.location.href = '/tasks.html';
+  }
+
+  function showFlash(message, type) {
+    const container = document.getElementById('flash-container');
+    container.innerHTML = `<div class="flash ${type}">${message}</div>`;
+  }
+
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
+        window.location.href = '/tasks.html';
+      } else {
+        showFlash(data.error || 'Registration failed', 'danger');
+      }
+    } catch {
+      showFlash('Network error. Please try again.', 'danger');
+    }
+  });
+</script>
+</body>
+</html>
