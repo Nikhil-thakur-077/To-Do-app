@@ -14,12 +14,15 @@
     <form method="POST" action="{{ url_for('tasks.clear_tasks') }}">
         <button type="submit" class="btn btn-clear"> Clear All Tasks </button>
     </form>
+
+    <br>
     <table class="task-table">
         <thead>
             <tr>
                 <th> Task </th>
                 <th> Status</th>
                 <th> Change</th>
+                <th> Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +36,11 @@
                 <td>
                     <form action="{{ url_for('tasks.toggle_status',task_id=task.id )}}" method="POST">
                         <button class="btn-small" type="submit">Next</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{{ url_for('tasks.clear_one_task',task_id=task.id )}}" method="POST">
+                        <button class="btn-small" type="submit">Delete Taskk</button>
                     </form>
                 </td>
             </tr>

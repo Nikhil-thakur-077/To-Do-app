@@ -9,7 +9,7 @@ if VENV_PYTHON.exists() and Path(sys.executable).resolve() != VENV_PYTHON.resolv
     raise SystemExit(subprocess.call([str(VENV_PYTHON), *sys.argv]))
 
 from app import create_app, db
-from app.models import Task, user
+from app.models import user
 
 app = create_app()
 

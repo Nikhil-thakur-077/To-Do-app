@@ -1,49 +1,83 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from app import db
-from app.models import Task
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-tasks_bp = Blueprint('tasks', __name__)
+from app.user_db import Task, get_user_task_session
+
+tasks_bp = Blueprint("tasks", __name__)
+
+
+def _require_user_session():
+    if "user" not in session or "user_id" not in session:
+        return None
+    return get_user_task_session()
+
 
 @tasks_bp.route("/")
 def view_tasks():
-    if "user" not in session:
+    db_session = _require_user_session()
+    if db_session is None:
         return redirect(url_for("auth.login"))
-    
-    tasks = Task.query.all()
-    return render_template('tasks.html', tasks=tasks)
 
-@tasks_bp.route('/add',methods = ["GET","POST"])
+    tasks = db_session.query(Task).all()
+    return render_template("tasks.html", tasks=tasks)
+
+
+@tasks_bp.route("/add", methods=["GET", "POST"])
 def add_tasks():
-    if 'user' not in session:
-        return redirect(url_for('auth.login'))
-    
-    title = request.form.get('title')
+    db_session = _require_user_session()
+    if db_session is None:
+        return redirect(url_for("auth.login"))
+
+    title = request.form.get("title")
     if title:
-        new_task = Task(title = title,status ="Pending")
-        db.session.add(new_task)
-        db.session.commit()
-        flash ("Task added successfully",'success')
+        new_task = Task(title=title, status="Pending")
+        db_session.add(new_task)
+        db_session.commit()
+        flash("Task added successfully", "success")
     return redirect(url_for("tasks.view_tasks"))
 
 
-@tasks_bp.route('/toggle/<int:task_id>', methods=["POST"])
+@tasks_bp.route("/toggle/<int:task_id>", methods=["POST"])
 def toggle_status(task_id):
-    task = Task.query.get(task_id)
+    db_session = _require_user_session()
+    if db_session is None:
+        return redirect(url_for("auth.login"))
+
+    task = db_session.get(Task, task_id)
     if task:
-        if task.status == 'Pending':
-            task.status = 'Working'
-        elif task.status == 'Working':
-            task.status  = 'done'
-        else :
+        if task.status == "Pending":
+            task.status = "Working"
+        elif task.status == "Working":
+            task.status = "done"
+        else:
             task.status = "Pending"
-        db.session.commit()
-        flash('Task status updated ','info')
-        return redirect(url_for('tasks.view_tasks'))
+        db_session.commit()
+        flash("Task status updated ", "info")
+    return redirect(url_for("tasks.view_tasks"))
 
-@tasks_bp.route('/clear', methods=["POST"])
+
+@tasks_bp.route("/clear", methods=["POST"])
 def clear_tasks():
-    Task.query.delete()
-    db.session.commit()
-    flash('All tasks cleared ','info')
-    return redirect(url_for('tasks.view_tasks'))
+    db_session = _require_user_session()
+    if db_session is None:
+        return redirect(url_for("auth.login"))
 
+    db_session.query(Task).delete()
+    db_session.commit()
+    flash("All tasks cleared ", "info")
+    return redirect(url_for("tasks.view_tasks"))
+
+
+@tasks_bp.route("/clear_one_task/<int:task_id>", methods=["POST"])
+def clear_one_task(task_id):
+    db_session = _require_user_session()
+    if db_session is None:
+        return redirect(url_for("auth.login"))
+
+    task = db_session.get(Task, task_id)
+    if task:
+        db_session.delete(task)
+        db_session.commit()
+        flash("Task deleted ", "info")
+    else:
+        flash("Task not found ", "danger")
+    return redirect(url_for("tasks.view_tasks"))
