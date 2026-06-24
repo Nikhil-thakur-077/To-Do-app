@@ -11,11 +11,11 @@ def _require_user_session():
     return get_user_task_session()
 
 
-@tasks_bp.route("/")
+@tasks_bp.route("/tasks")
 def view_tasks():
     db_session = _require_user_session()
     if db_session is None:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.index"))
 
     tasks = db_session.query(Task).all()
     return render_template("tasks.html", tasks=tasks)
@@ -25,7 +25,7 @@ def view_tasks():
 def add_tasks():
     db_session = _require_user_session()
     if db_session is None:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.index"))
 
     title = request.form.get("title")
     if title:
@@ -40,7 +40,7 @@ def add_tasks():
 def toggle_status(task_id):
     db_session = _require_user_session()
     if db_session is None:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.index"))
 
     task = db_session.get(Task, task_id)
     if task:
@@ -59,7 +59,7 @@ def toggle_status(task_id):
 def clear_tasks():
     db_session = _require_user_session()
     if db_session is None:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.index"))
 
     db_session.query(Task).delete()
     db_session.commit()
@@ -71,7 +71,7 @@ def clear_tasks():
 def clear_one_task(task_id):
     db_session = _require_user_session()
     if db_session is None:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.index"))
 
     task = db_session.get(Task, task_id)
     if task:

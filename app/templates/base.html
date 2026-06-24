@@ -11,7 +11,7 @@
     <div class="container">
         <h1> To-Do App </h1>
         <nav>
-            <a href="{{ url_for('tasks.view_tasks') }}">Home</a>
+            <a href="{{ url_for('auth.index') }}">Home</a>
             {% if 'user' in session %}
                 <a href="{{ url_for('auth.logout') }}">Logout</a>
             {% else %}

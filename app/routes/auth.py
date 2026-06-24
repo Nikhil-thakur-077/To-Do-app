@@ -7,6 +7,13 @@ from app.user_db import init_user_database
 auth_bp = Blueprint("auth", __name__)
 
 
+@auth_bp.route("/")
+def index():
+    if "user" in session:
+        return redirect(url_for("tasks.view_tasks"))
+    return render_template("index.html")
+
+
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -45,4 +52,4 @@ def logout():
     session.pop("user", None)
     session.pop("user_id", None)
     flash("Logged out", "info")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("auth.index"))
