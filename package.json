@@ -1,0 +1,16 @@
+{
+  "name": "tasks-manager",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@netlify/database": "^1.0.0",
+    "@netlify/functions": "^2.0.0",
+    "drizzle-orm": "beta"
+  },
+  "devDependencies": {
+    "drizzle-kit": "beta"
+  }
+}
